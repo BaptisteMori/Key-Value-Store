@@ -339,9 +339,17 @@ contiguous space reservation to optimize search.
 # Implementation
 
 ## Read
-
+```c
+function read(key)
+    vsf_pointer = read_index(key)
+    value = read_vsf(vsf_pointer)
+    return value
 ```
-Function get_offset_from_index(key):
+
+
+### Read index
+```c
+function read_index(key):
     // Extract the segments of the key
     l1_segment = (key >> (B - L1_BITS)) & L1_MASK
     l2_segment = (key >> (B - L1_BITS - L2_BITS)) & L2_MASK
@@ -368,29 +376,14 @@ Function get_offset_from_index(key):
     // Read the pointer entry
     l3_entry = ptr_file.read_offset(ptr_offset)
     
-    //  VSF
-    // vsf = load_VSF(l3_entry.vsf_id)
-    // valeur = vsf.read_offset(l3_entry.offset, l3_entry.size)
+    return l3_entry
+```
+
+
+### Read VSF
+```c 
+function read_vsf(pointer):
     
-    return l3_entrylire_à
-```
-
-```
-Function get_value(pointer):
-	// load VSF file
-	vsf = load_VSF(pointer.file_id)
-	value_header = vsf.read_offset(pointer.offset, VALUE_HEADER_SIZE)
-
-	// Get the size of the block
-	// check if it's compress or not
-	// check if it's chunked or not
-
-```
-
-
-```
-Function read(key)
-
 ```
 
 
